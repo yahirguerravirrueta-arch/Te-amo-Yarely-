@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Web Especial</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+      cursor: pointer;
+    }
+
+    .fondo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 110%;
+      height: 110%;
+      background: url("fondo.png") no-repeat center center;
+      background-size: cover;
+      animation: mover 20s ease-in-out infinite alternate;
+    }
+
+    @keyframes mover {
+      0% { transform: scale(1) translate(0, 0); }
+      50% { transform: scale(1.05) translate(10px, -10px); }
+      100% { transform: scale(1) translate(0, 0); }
+    }
+
+    .texto {
+      position: absolute;
+      bottom: 50px;
+      width: 100%;
+      text-align: center;
+      color: white;
+      font-size: 2rem;
+      font-family: 'Segoe UI', sans-serif;
+      text-shadow: 0px 0px 15px rgba(255,255,255,0.8);
+      transition: opacity 0.5s ease;
+    }
+
+    /* Oculto al inicio */
+    canvas, .overlay {
+      display: none;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .center-message {
+      font-family: 'Courier New', monospace;
+      color: #ff69b4;
+      font-size: 3rem;
+      text-align: center;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="fondo"></div>
+  <div class="texto">Tú y yo, hasta el infinito ✨🌍</div>
+
+  <!-- Animación final -->
+  <canvas id="canvas"></canvas>
+  <div class="overlay">
+    <div class="center-message">I WOLF YOU YARELY 💖</div>
+  </div>
+
+  <script>
+    // Lista de frases
+    const frases = [
+      "3",
+      "2",
+      "1",
+      "i wolf yoy preciosa 🙈",
+      "No te imaginas el amor que siento hacia ti 👀",
+      "Y cada click es una razón por la cual me enamoré de ti 😮",
+      "Tu estatura pequeña esconde un corazón enorme",
+      "Me encanra cada look, ya sea negro, castaño o rubio, me fascina tu belleza",
+      "Amo cómo eres tan linda conmigo, aunque reservada y cuidadosa con su privacidad ",
+      "Tu sonrisa ilumina todo mi mundo",
+      "Tus ojos claritos me pierden",
+      "Tu figura resalta y cada detalle de ti me hace admirarte aún más",
+      "Desde la prepa, cuando te conocí, supe que eras alguien especial en mi vida ",
+      "Al principio pensabas que jugaba, pero mi amor por ti siempre fue y será enorme",
+      "No puedo imaginar un futuro donde tú no estés a mi lado",
+      "Al principio eras fría y un poco desinteresada, pero poco a poco me mostraste tu cariño ",
+      "Hoy me haces dibujitos y videitos que me llenan de felicidad",
+      "Eres la mujer que siempre soñé, Yarely",
+      "Cada gesto tuyo me enamora más, desde tu risa hasta tu mirada ",
+      "Amo cómo cuidas de tu familia, tu corazón es enorme",
+      "Tu mirada tierna me encanta",
+      "Tu sonrisa es como un rayo de sol",
+      "Desde la prepa me enamoré de ti y ese amor solo crece cada día ",
+      "Tu personalidad, al principio fría, ahora es dulce y llena de cariño",
+      "Me haces sentir especial como nadie más podría",
+      "Y te lo agradezco preiosa",
+      "Eres mi inspiración diaria y la razón de mi felicidad ",
+      "Cada pequeño detalle tuyo me enamora más ",
+      "Tu voz es tan hermosa que siempre quiero escucharte",
+      "Aunque a ti no te guste, mmm",
+      "Me encanta tu forma de ser reservada y al mismo tiempo tan amorosa",
+      "Cada día contigo es un regalo que no quiero dejar de abrir",
+      "Eres mi alegría constante, mi paz y mi amor ",
+      "Tu ternura me hace querer cuidarte siempre ",
+      "Eres mi primer pensamiento al despertar y el último al dormir",
+      "Cada dibujito que haces me hace sonreír como no te imaginas ",
+      "Tu amor es único y me hace sentir afortunado",
+      "No hay nada que no admire de ti, cada detalle me enamora ",
+      "Eres la combinación perfecta de ternura y fortaleza ",
+      "Tu amor me hace querer ser mejor cada día ",
+      "Eres mi todo, Yarely, y siempre lo serás "
+      "i love you ",
+      "te amo ",
+      "te amo por siempre corazon ❤️",
+    ];
+
+    let clickCount = 0;
+    const textoDiv = document.querySelector('.texto');
+
+    document.body.addEventListener('click', () => {
+      if (clickCount < frases.length) {
+        textoDiv.style.opacity = 0;
+        setTimeout(() => {
+          textoDiv.textContent = frases[clickCount];
+          textoDiv.style.opacity = 1;
+          clickCount++;
+        }, 300);
+      } else {
+        explosionFinal();
+      }
+    });
+
+    // -----------------------
+    // EFECTO EXPLOSIÓN FINAL
+    // -----------------------
+    function explosionFinal() {
+      textoDiv.style.display = 'none';
+      const fondo = document.querySelector('.fondo');
+      fondo.style.animation = 'none';
+      fondo.style.opacity = 0;
+
+      setTimeout(() => {
+        iniciarLlueveAmor();
+      }, 1000);
+    }
+
+    // -----------------------
+    // ANIMACIÓN LLUEVE AMOR
+    // -----------------------
+    function iniciarLlueveAmor() {
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+      const overlay = document.querySelector('.overlay');
+
+      canvas.style.display = 'block';
+      overlay.style.display = 'flex';
+
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const text = "TE AMO";
+      const fontSize = 16;
+      const columns = Math.floor(canvas.width / (fontSize * 4));
+      const drops = new Array(columns).fill(1);
+
+      ctx.font = fontSize + "px monospace";
+
+      function draw() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "#ff69b4";
+        for (let i = 0; i < drops.length; i++) {
+          const x = i * fontSize * 4;
+          const y = drops[i] * fontSize;
+          ctx.fillText(text, x, y);
+
+          if (y > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0;
+          }
+
+          drops[i]++;
+        }
+      }
+
+      setInterval(draw, 50);
+
+      window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      });
+    }
+  </script>
+</body>
+</html>
+
+
+
